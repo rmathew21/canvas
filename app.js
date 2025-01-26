@@ -2,10 +2,11 @@ const canvas = document.querySelector('#draw');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-canvas.style.border = "1px solid red";
+// canvas.style.border = "1px solid red";
 ctx.strokeStyle = '#BADA55';
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
+ctx.lineWidth = 50;
 
 let isDrawing = false;
 let lastX = 0;
@@ -15,14 +16,20 @@ function draw(e) {
    if (!isDrawing) return; 
     // e.preventDefault(); 
     console.log('Mouse move event:', e);
+    ctx.beginPath(); 
+    ctx.moveTo(lastX, lastY); // start from
+    ctx.lineTo(e.offsetX, e.offsetY); // go to
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY];
 }
 
 canvas.addEventListener('pointermove', draw);
 // canvas.addEventListener('pointermove', draw, {
 //     passive: false
 // });
-canvas.addEventListener('pointerdown', () => {
-    isDrawing = true
+canvas.addEventListener('pointerdown', (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
     // console.log('pointer down on canvas') 
 });
 
