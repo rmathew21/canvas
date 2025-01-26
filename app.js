@@ -17,10 +17,8 @@ let direction = true
 
 function draw(e) {
    if (!isDrawing) return; 
-    // e.preventDefault(); 
     console.log('Mouse move event:', e);
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-    
     ctx.beginPath(); 
     ctx.moveTo(lastX, lastY); // start from
     ctx.lineTo(e.offsetX, e.offsetY); // go to
@@ -39,72 +37,22 @@ function draw(e) {
     } else {
         ctx.lineWidth--;
     }
-    
 }
 
 canvas.addEventListener('pointermove', draw);
-// canvas.addEventListener('pointermove', draw, {
-//     passive: false
-// });
+
 canvas.addEventListener('pointerdown', (e) => {
     isDrawing = true;
     [lastX, lastY] = [e.offsetX, e.offsetY];
-    // console.log('pointer down on canvas') 
 });
-
-// canvas.addEventListener('pointerdown', (e) => {
-//     isDrawing = true;
-//     canvas.setPointerCapture(e.pointerId);
-//     console.log('move down on canvas')
-// });
 
 canvas.addEventListener('pointerup', () => {
-    isDrawing = false
-    // console.log('pointer up on canvas')
+    isDrawing = false;
 });
-
-// canvas.addEventListener('pointerup', (e) => {
-//     isDrawing = false;
-//     canvas.releasePointerCapture(e.pointerId)
-//     console.log('move up on canvas');
-// })
 
 canvas.addEventListener('pointerout', () => {
     isDrawing = false
-    // console.log('pointer is out on canvas')
 });
-
-
-
-// canvas.addEventListener('mousedown', () => {
-// console.log('Mouse down on canvas');
-// canvas.focus();
-// });
-
-// canvas.addEventListener('mouseup', () => console.log('Mouse up on canvas'));
-
-// For testing outside the canvas
-// window.addEventListener('mousemove', (e) => {
-//     console.log('Mouse move on window:', e);
-// });
-
-
-
-
-
-
-// canvas.addEventListener('mousemove', draw);
-// canvas.addEventListener('mousedown', () => {
-//     console.log('mousedown');
-// });
-// canvas.addEventListener('mouseup', () => {
-//     console.log('mouseup');
-// });
-// canvas.addEventListener('mouseout', () => {
-//     console.log('mouseout');
-// });
-
-
 
 // ===================================
 // const canvas = document.querySelector('#draw');
