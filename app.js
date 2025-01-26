@@ -23,7 +23,7 @@ canvas.addEventListener('pointermove', draw);
 // });
 canvas.addEventListener('pointerdown', () => {
     isDrawing = true
-    console.log('pointer down on canvas') 
+    // console.log('pointer down on canvas') 
 });
 
 // canvas.addEventListener('pointerdown', (e) => {
@@ -34,7 +34,7 @@ canvas.addEventListener('pointerdown', () => {
 
 canvas.addEventListener('pointerup', () => {
     isDrawing = false
-    console.log('pointer up on canvas')
+    // console.log('pointer up on canvas')
 });
 
 // canvas.addEventListener('pointerup', (e) => {
@@ -45,7 +45,7 @@ canvas.addEventListener('pointerup', () => {
 
 canvas.addEventListener('pointerout', () => {
     isDrawing = false
-    console.log('pointer is out on canvas')
+    // console.log('pointer is out on canvas')
 });
 
 
