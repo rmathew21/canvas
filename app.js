@@ -45,17 +45,27 @@ function draw(e) {
 let currentX = 0;
 let currentY = 0;
 
+function getEventCoordinates(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+    };
+}
+
 canvas.addEventListener('pointermove', (e) => {
     if (!isDrawing) return;
 
-    currentX = e.offsetX;
-    currentY = e.offsetY;
+    const { x, y } = getEventCoordinates(e);
+    currentX = x;
+    currentY = y;
     shouldDraw = true;
 });
 
 canvas.addEventListener('pointerdown', (e) => {
+    const { x, y } = getEventCoordinates(e);
     isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    [lastX, lastY] = [x, y];
     currentX = lastX;
     currentY = lastY;
     shouldDraw = true;
