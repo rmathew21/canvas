@@ -82,6 +82,17 @@ canvas.addEventListener('pointerout', () => {
     shouldDraw = false; // stop drawing
 });
 
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // prevent scrolling
+    if (!isDrawing) return;
+
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    currentX = touch.clientX - rect.left;
+    currentY = touch.clientY - rect.top;
+    shouldDraw = true;
+});
+
 // ===================================
 // const canvas = document.querySelector('#draw');
 // const ctx = canvas.getContext('2d');
