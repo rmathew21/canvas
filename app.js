@@ -14,44 +14,62 @@ let lastX = 0;
 let lastY = 0;
 let hue = 0;
 let direction = true
+let shouldDraw = false; // Track if we should draw
 
 function draw(e) {
-   if (!isDrawing) return; 
+   if (!shouldDraw) return; //Only draw when actively moving
     console.log('Mouse move event:', e);
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
     ctx.beginPath(); 
     ctx.moveTo(lastX, lastY); // start from
-    ctx.lineTo(e.offsetX, e.offsetY); // go to
+    ctx.lineTo(currentX, currentY); 
     ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    [lastX, lastY] = [currentX, currentY];
 
     hue++;
-    if(hue >= 360) {
-        hue = 0;
-    }
-    if(ctx.lineWidth >= 100 || ctx.lineWidth<=1) {
+    if(hue >= 360) hue = 0;
+    
+    if(ctx.lineWidth >= 50 || ctx.lineWidth <= 1) {
         direction = !direction;
     }
-    if (direction) {
-        ctx.lineWidth++;
-    } else {
-        ctx.lineWidth--;
-    }
+    // if (direction) {
+    //     ctx.lineWidth++;
+    // } else {
+    //     ctx.lineWidth--;
+    // }
+    ctx.lineWidth += direction ? 1 : -1;
+    
+    requestAnimationFrame(draw); // Schedule the next frame
 }
 
-canvas.addEventListener('pointermove', draw);
+let currentX = 0;
+let currentY = 0;
+
+canvas.addEventListener('pointermove', (e) => {
+    if (!isDrawing) return;
+
+    currentX = e.offsetX;
+    currentY = e.offsetY;
+    shouldDraw = true;
+});
 
 canvas.addEventListener('pointerdown', (e) => {
     isDrawing = true;
     [lastX, lastY] = [e.offsetX, e.offsetY];
+    currentX = lastX;
+    currentY = lastY;
+    shouldDraw = true;
+    draw(); // Start the drawing loop
 });
 
 canvas.addEventListener('pointerup', () => {
     isDrawing = false;
+    shouldDraw = false; // Stop drawing
 });
 
 canvas.addEventListener('pointerout', () => {
-    isDrawing = false
+    isDrawing = false;
+    shouldDraw = false; // stop drawing
 });
 
 // ===================================
